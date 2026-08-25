@@ -8,6 +8,7 @@ packages=(
     eza
     fd
     fzf
+    github-cli
     jq
     tree
     zoxide
