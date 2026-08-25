@@ -21,7 +21,7 @@ aur_packages=(
     zapzap-bin
     rustdesk-bin
     jamesdsp-pipewire-bin
-    chatgpt-desktop-bin
+    chatgpt-desktop
     postman-bin
     tabby-bin
     yandex-music

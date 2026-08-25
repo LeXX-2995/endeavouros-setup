@@ -10,6 +10,7 @@ scripts=(
     "21-dotnet-workloads.sh"
     "30-apps.sh"
     "31-eimzo.sh"
+    "32-fingerprint.sh"
     "40-config.sh"
 )
 

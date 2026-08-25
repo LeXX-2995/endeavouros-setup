@@ -8,7 +8,9 @@ The scripts install:
   from AUR as a fallback on plain Arch);
 - Fish as the default shell, with a small unbranded user configuration;
 - CLI and development tools, .NET workloads, and desktop applications;
+- the official ChatGPT desktop application through its current AUR package;
 - E-IMZO, its certificate, desktop entry, and autostart entry;
+- `fprintd`/`libfprint` support for the fingerprint reader;
 - a generic user SSH agent, without personal keys or host configuration.
 
 ## Run
@@ -30,3 +32,8 @@ commit the private-key material itself, even to that repository.
 
 The numeric prefixes define the intended order. Every package-install command
 uses `--needed`, so the scripts can be run again when required.
+
+Fingerprint templates cannot be transferred between installations. After
+running `32-fingerprint.sh`, enroll a finger in KDE Plasma under **System
+Settings -> Users -> Configure Fingerprint Authentication**, or run
+`fprintd-enroll` in a terminal. Use `fprintd-verify` to test it.
