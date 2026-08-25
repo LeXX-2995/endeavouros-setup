@@ -6,11 +6,16 @@ echo "==> Installing CLI tools"
 packages=(
     bat
     eza
+    expac
+    fastfetch
     fd
     fzf
     github-cli
+    hwinfo
     jq
+    libnotify
     tree
+    ttf-jetbrains-mono-nerd
     zoxide
     git-delta
 )

@@ -37,3 +37,9 @@ Fingerprint templates cannot be transferred between installations. After
 running `32-fingerprint.sh`, enroll a finger in KDE Plasma under **System
 Settings -> Users -> Configure Fingerprint Authentication**, or run
 `fprintd-enroll` in a terminal. Use `fprintd-verify` to test it.
+
+The fingerprint script also enables fingerprint-or-password authentication
+only for `sudo`. It keeps the original PAM configuration at
+`/etc/pam.d/sudo.pre-fingerprint`. Be aware that fingerprint authentication
+for privilege elevation has a known attention/hijacking risk; do not touch the
+reader unless you initiated the `sudo` request yourself.

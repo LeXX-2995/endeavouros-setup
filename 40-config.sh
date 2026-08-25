@@ -31,27 +31,117 @@ cat > "$FISH_CONF" <<'EOF'
 # User Fish configuration
 #
 
-#
-# zoxide
-#
+if not status is-interactive
+    return
+end
 
+# CachyOS-style welcome screen
+function fish_greeting
+    if type -q fastfetch
+        fastfetch
+    end
+end
+
+# User executable directories
+fish_add_path "$HOME/.local/bin" "$HOME/.cargo/bin"
+
+# Better man pages
+if type -q bat
+    set -gx MANROFFOPT -c
+    set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
+end
+
+# Directory jumping and fuzzy history/file search
 if type -q zoxide
     zoxide init fish | source
 end
 
+if type -q fzf
+    fzf --fish | source
+end
 
 #
 # Useful aliases
 #
 
 if type -q eza
-    alias ll='eza -lah'
-    alias la='eza -a'
-    alias l='eza -lah'
+    alias ls='eza -al --color=always --group-directories-first --icons=always'
+    alias la='eza -a --color=always --group-directories-first --icons=always'
+    alias ll='eza -l --color=always --group-directories-first --icons=always'
+    alias lt='eza -aT --color=always --group-directories-first --icons=always'
+    alias l.='eza -a | grep -E "^\."'
 end
 
 if type -q bat
     alias cat='bat'
+end
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
+alias grep='grep --color=auto'
+alias update='yay -Syu'
+alias jctl='journalctl -p 3 -xb'
+alias gitpkg='pacman -Q | grep -i -- "-git" | count'
+
+if type -q expac
+    alias big='expac -H M "%m\t%n" | sort -h | nl'
+    alias rip='expac --timefmt="%Y-%m-%d %T" "%l\t%n %v" | sort | tail -200 | nl'
+end
+
+# Timestamped command history
+function history
+    builtin history --show-time='%F %T ' $argv
+end
+
+# Quick file backup
+function backup --argument-names filename
+    if test -z "$filename"
+        echo 'Usage: backup FILE' >&2
+        return 2
+    end
+
+    command cp -- "$filename" "$filename.bak"
+end
+
+# Copy directories recursively while keeping normal cp behaviour for files
+function copy
+    if test (count $argv) -eq 2; and test -d "$argv[1]"
+        command cp -r -- (string trim --right --chars=/ "$argv[1]") "$argv[2]"
+    else
+        command cp -- $argv
+    end
+end
+
+# Bash-style !! and !$ history expansion while typing
+function __history_previous_command
+    switch (commandline -t)
+        case '!'
+            commandline -t $history[1]
+            commandline -f repaint
+        case '*'
+            commandline -i '!'
+    end
+end
+
+function __history_previous_command_arguments
+    switch (commandline -t)
+        case '!'
+            commandline -t ''
+            commandline -f history-token-search-backward
+        case '*'
+            commandline -i '$'
+    end
+end
+
+if test "$fish_key_bindings" = fish_vi_key_bindings
+    bind -M insert ! __history_previous_command
+    bind -M insert '$' __history_previous_command_arguments
+else
+    bind ! __history_previous_command
+    bind '$' __history_previous_command_arguments
 end
 
 
