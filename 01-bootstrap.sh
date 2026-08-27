@@ -11,6 +11,8 @@ base_packages=(
     base-devel
     fish
     git
+    bluez 
+    bluez-utils
     nano
     openssh
 )
@@ -39,5 +41,7 @@ else
     )
 fi
 
+echo "Enabling Bluetooth"
+sudo systemctl enable --now bluetooth.service
 echo
 echo "==> Bootstrap complete"
