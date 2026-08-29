@@ -6,6 +6,10 @@ echo "==> Installing development tools"
 pacman_packages=(
     dotnet-sdk
     dotnet-sdk-8.0
+    aspnet-runtime-8.0
+    aspnet-targeting-pack-8.0
+    aspnet-runtime-10.0
+    aspnet-targeting-pack-10.0
     nodejs
     npm
 )
