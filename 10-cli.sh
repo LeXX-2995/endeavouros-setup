@@ -14,6 +14,7 @@ packages=(
     hwinfo
     jq
     libnotify
+    bolt
     tree
     ttf-jetbrains-mono-nerd
     zoxide
